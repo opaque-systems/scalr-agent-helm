@@ -18,6 +18,9 @@ spec:
         checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
       labels:
         {{- include "agent-k8s.selectorLabels" . | nindent 8 }}
+      {{- with .Values.agent.kubernetes_task_labels }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
